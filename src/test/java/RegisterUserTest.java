@@ -1,13 +1,14 @@
 import driver_manager.DriverManager;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import pages.BasePage;
-import pages.RegisterPage;
+import pages.RegisterUserPage;
 
 public class RegisterUserTest extends BasePage {
-    public static void main(String[] args) {
+
+    public static String userName = "John";
+    public static void main(String[] args) throws InterruptedException {
         WebDriver driver = DriverManager.getDriver();
-        RegisterPage registerPage = new RegisterPage(driver);
+        RegisterUserPage registerPage = new RegisterUserPage(driver);
         registerPage.goToStartPage();
 
         //Verify that home page is visible successfully
@@ -30,19 +31,19 @@ public class RegisterUserTest extends BasePage {
         }
 
         //Enter name and email address
-        registerPage.setName("John");
-        registerPage.setEmailAddress("johnn@gmail.com");
+        registerPage.setName(userName);
+        registerPage.setEmailAddress("joomijnuijdsjniklopoip@gmail.com");
 
         //Click 'Signup' button
         registerPage.clickOnSignupButton();
-
+        Thread.sleep(1000);
         //Verify that 'ENTER ACCOUNT INFORMATION' is visible
         if (registerPage.enterAccountInformationIsVisible()) {
             System.out.println("ENTER ACCOUNT INFORMATION is visible");
         } else {
             System.out.println("ENTER ACCOUNT INFORMATION is not visible");
         }
-
+        Thread.sleep(1000);
         //Fill details: Title, Name, Email, Password, Date of birth
         registerPage.radioButton();
         registerPage.enterPassword("1234");
@@ -50,12 +51,12 @@ public class RegisterUserTest extends BasePage {
         registerPage.monthOptions("May");
         registerPage.yearsOptions("2000");
 
+
         //Select checkbox 'Sign up for our newsletter!'
         registerPage.checkboxSignUp();
 
         //Select checkbox 'Receive special offers from our partners!'
         registerPage.checkboxReceiveSpecial();
-
         //details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number
         registerPage.firstName("Ani");
         registerPage.lastName("Sargsyan");
@@ -67,20 +68,35 @@ public class RegisterUserTest extends BasePage {
         registerPage.city("City Name");
         registerPage.zipcode("12/23");
         registerPage.mobile_number("8141234567");
+        Thread.sleep(3000);
 
         //Click 'Create Account button'
         registerPage.createAccountButton();
-        JavascriptExecutor jse = null;
-        jse.executeScript("arguments[0].click()");
+
 
         //Verify that 'ACCOUNT CREATED!' is visible
-
+        if (registerPage.accountCreatedIsVisible()) {
+            System.out.println("ACCOUNT CREATED!");
+        } else {
+            System.out.println("ACCOUNT CREATED! is not visible");
+        }
 
         //Click 'Continue' button
+        registerPage.clickContinueButton();
+
         //Verify that 'Logged in as username' is visible
+        registerPage.loggedUsernameIsVisible();
+
+
         //Click 'Delete Account' button
+        registerPage.deleteAccount();
+
         //Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
+        if (registerPage.accountDeletedText()) {
+            System.out.println("ACCOUNT DELETED!");
 
-
+        } else System.out.println("ACCOUNT DELETED! is not deleted");
+        registerPage.closeDriver();
     }
+
 }

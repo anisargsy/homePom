@@ -6,8 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import until.WaitUntil;
 
-public class RegisterPage extends BasePage {
+public class RegisterUserPage extends BasePage {
 
     @FindBy(xpath = "//h2[contains(., 'Enter Account Information')]")
     private WebElement enterAccountInformationIsVisibleElement;
@@ -33,7 +34,7 @@ public class RegisterPage extends BasePage {
     private WebElement SelectYears;
 
     @FindBy(xpath = "//input[@type='checkbox' and @id='newsletter']")
-    private WebElement checkboxSignUp;
+    private WebElement checkboxNewsLetter;
 
     @FindBy(xpath = "//input[@type='checkbox' and @id='optin']")
     private WebElement checkboxReceiveSpecial;
@@ -71,8 +72,45 @@ public class RegisterPage extends BasePage {
     @FindBy(xpath = "//button[@data-qa='create-account']")
     private WebElement clickOnCreateAccountButton;
 
+    @FindBy(xpath = "//b[contains(text(), 'Account Created!')]")
+    private WebElement accountCreatedIsVisible;
 
-    public RegisterPage(WebDriver driver) {
+
+    @FindBy(xpath = "//a[contains(text(), 'Continue')]")
+    private WebElement clickContinueButton;
+
+
+    @FindBy(xpath = "//b[contains(text(), 'John')]")
+    private WebElement loggedUsernameIsVisible;
+
+
+    @FindBy(xpath = "//a[@href='/delete_account']")
+    private WebElement deleteAccountButton;
+
+    @FindBy(xpath = "//b[contains(text(), 'Account Deleted!')]")
+    private WebElement accountDeletedText;
+
+    public boolean accountDeletedText(){
+        return accountDeletedText.isDisplayed();
+    }
+
+    public RegisterUserPage deleteAccount(){
+        deleteAccountButton.click();
+        return this;
+    }
+
+    public boolean loggedUsernameIsVisible(){
+        WaitUntil.waitElementLocatedBecomeVisible(driver, By.xpath("//b[contains(text(), 'John')]"),true);
+        return loggedUsernameIsVisible.isDisplayed();
+       }
+
+    public RegisterUserPage clickContinueButton(){
+        clickContinueButton.click();
+        return this;
+    }
+
+
+    public RegisterUserPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -82,118 +120,124 @@ public class RegisterPage extends BasePage {
         return driver.findElement(by).getText();
     }
 
+    public boolean accountCreatedIsVisible() {
+        return accountCreatedIsVisible.isDisplayed();
+    }
+
     public void createAccountButton() {
         clickOnCreateAccountButton.click();
     }
 
-    public RegisterPage city(String city) {
+    public RegisterUserPage city(String city) {
         cityName.sendKeys(city);
         return this;
     }
 
-    public RegisterPage zipcode(String zipcode) {
+    public RegisterUserPage zipcode(String zipcode) {
         enterZipcode.sendKeys(zipcode);
         return this;
     }
 
-    public RegisterPage mobile_number(String mobile) {
+    public RegisterUserPage mobile_number(String mobile) {
         mobile_number.sendKeys(mobile);
         return this;
     }
 
-    public RegisterPage countryName(String country) {
+    public RegisterUserPage countryName(String country) {
         countryName.sendKeys(country);
         return this;
     }
 
-    public RegisterPage stateName(String state) {
+    public RegisterUserPage stateName(String state) {
         stateName.sendKeys(state);
         return this;
     }
 
-    public RegisterPage addressNameSecond(String address2) {
+    public RegisterUserPage addressNameSecond(String address2) {
         enterAddressName2.sendKeys(address2);
         return this;
     }
 
-    public RegisterPage addressNameFirst(String address1) {
+    public RegisterUserPage addressNameFirst(String address1) {
         enterAddressName1.sendKeys(address1);
         return this;
     }
 
-    public RegisterPage companyName(String company) {
+    public RegisterUserPage companyName(String company) {
         company_name.sendKeys(company);
         return this;
     }
 
-    public RegisterPage lastName(String name) {
+    public RegisterUserPage lastName(String name) {
         last_name.sendKeys(name);
         return this;
     }
 
-    public RegisterPage firstName(String name) {
+    public RegisterUserPage firstName(String name) {
         first_name.sendKeys(name);
         return this;
     }
 
-    public RegisterPage checkboxReceiveSpecial() {
+    public RegisterUserPage checkboxReceiveSpecial() {
         checkboxReceiveSpecial.click();
         return this;
     }
 
-    public RegisterPage checkboxSignUp() {
-        checkboxSignUp.click();
+    public RegisterUserPage checkboxSignUp() {
+        checkboxNewsLetter.click();
         return this;
     }
 
-    public RegisterPage yearsOptions(String year) {
+    public RegisterUserPage yearsOptions(String year) {
         Select daysOptions = new Select(SelectYears);
         daysOptions.selectByVisibleText(year);
         return this;
     }
 
-    public RegisterPage monthOptions(String month) {
+    public RegisterUserPage monthOptions(String month) {
         Select daysOptions = new Select(SelectMonths);
         daysOptions.selectByVisibleText(month);
         return this;
     }
 
-    public RegisterPage daysOptions(String days) {
+    public RegisterUserPage daysOptions(String days) {
         Select daysOptions = new Select(SelectDays);
         daysOptions.selectByVisibleText(days);
         return this;
     }
 
-    public RegisterPage enterPassword(String password) {
+    public RegisterUserPage enterPassword(String password) {
         enterPassword.sendKeys(password);
         return this;
     }
 
-    public RegisterPage radioButton() {
+    public RegisterUserPage radioButton() {
         radioButton.click();
         return this;
     }
 
     public boolean enterAccountInformationIsVisible() {
+
         return enterAccountInformationIsVisibleElement.isDisplayed();
+
     }
 
-    public RegisterPage setName(String login) {
+    public RegisterUserPage setName(String login) {
         loginSignUpButton.sendKeys(login);
         return this;
     }
 
-    public RegisterPage setEmailAddress(String mail) {
+    public RegisterUserPage setEmailAddress(String mail) {
         setEmailAddressButton.sendKeys(mail);
         return this;
     }
 
-    public RegisterPage clickOnSignupLoginButton() {
+    public RegisterUserPage clickOnSignupLoginButton() {
         clickOnSignupLoginButton.click();
         return this;
     }
 
-    public RegisterPage clickOnSignupButton() {
+    public RegisterUserPage clickOnSignupButton() {
         clickOnSignupButton.click();
         return this;
     }

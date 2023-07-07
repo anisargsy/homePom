@@ -7,20 +7,20 @@ import org.openqa.selenium.WebElement;
 import until.WaitUntil;
 
 public class BasePage {
-    public BasePage(WebDriver driver) {
-        this.driver = driver;
-    }
     public static String startPage = "https://www.automationexercise.com/";
     public static String signUpPageURL = "https://www.automationexercise.com/login";
     public WebDriver driver;
-
-    public void setDriver(WebDriver driver) {
-        driver.manage().window().maximize();
+    public BasePage(WebDriver driver) {
         this.driver = driver;
     }
 
     public BasePage() {
         this.driver = DriverManager.getDriver();
+    }
+
+    public void setDriver(WebDriver driver) {
+        driver.manage().window().maximize();
+        this.driver = driver;
     }
 
     public WebElement findByXpath(String xpath) {
@@ -44,6 +44,9 @@ public class BasePage {
     public StartPage goToStartPage() {
         DriverManager.getDriver().get(startPage);
         return new StartPage();
+    }
+    public void closeDriver() {
+        DriverManager.closeDriver();
     }
 
 
